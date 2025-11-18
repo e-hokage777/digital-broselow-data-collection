@@ -5,7 +5,7 @@ import DataCapturePage from "./pages/data_capture/page";
 
 export default function App() {
   return (
-    <main className="max-w-md mx-auto bg-gray-50">
+    <main className="max-w-md mx-auto bg-gray-50 min-h-screen">
       <Navbar />
       <div className="p-4">
         {/* <ViewCapture/> */}
