@@ -4,7 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Button } from "./ui/button";
 
-export default function ImageInput({ name }: { name?: string }) {
+export default function ImageInput({
+  onCapture,
+}: {
+  onCapture?: (value: string) => void;
+}) {
   const inputRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<gsap.core.Timeline>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -41,6 +45,7 @@ export default function ImageInput({ name }: { name?: string }) {
 
       const data = canvasRef.current.toDataURL("image/png");
       setValue(data);
+      onCapture?.(data);
     }
   };
 

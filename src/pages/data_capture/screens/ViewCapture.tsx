@@ -1,24 +1,37 @@
 import ImageInput from "@/components/ImageInput";
 import PoseModelCanvas from "../../../components/PoseModelCanvas";
 import PoseSelectionButton from "../../../components/PoseSelectionButton";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PoseModel from "../../../components/PoseModel";
+import { DataCaptureContext } from "../services/data_capture_service";
 
 export default function ViewCapture() {
   const [direction, setDirection] = useState<
     "forward" | "right" | "left" | "backward"
   >("forward");
+  const { setData, data } = useContext(DataCaptureContext);
+
+  const getInstructions = () => {
+    switch (direction) {
+      case "forward":
+        return "Please make sure the patient is standing upright, facing the camera as shown to the right";
+      case "right":
+        return "Please make sure the patient is turned towards the right as shown";
+      case "left":
+        return "Please make sure the patient is turned toward the left as shown";
+      case "backward":
+        return "Please make sure the patient is standing upright, with their back facing the screen as shown";
+    }
+  };
+
   return (
     <section className="flex flex-col gap-8">
       <h1 className="text-center text-2xl font-semibold">Patient Images</h1>
       {/** pose display section */}
       <div className="flex flex-row gap-4">
         <div className="grow w-1/2">
-          <h2 className=" text-xl">Front</h2>
-          <p>
-            Please make sure the patient is standing upright, facing the camera
-            as shown to the right
-          </p>
+          <h2 className=" text-xl capitalize">{direction}</h2>
+          <p>{getInstructions()}</p>
         </div>
         <div className="grow w-1/2  h-40 rounded-lg overflow-hidden">
           <PoseModelCanvas>
@@ -29,7 +42,14 @@ export default function ViewCapture() {
 
       {/** pose capture section */}
       <div className="h-75">
-        <ImageInput />
+        <ImageInput
+          onCapture={(imageDataUrl) => {
+            setData({
+              ...data,
+              [direction]: imageDataUrl,
+            });
+          }}
+        />
       </div>
 
       {/** pose selection area */}

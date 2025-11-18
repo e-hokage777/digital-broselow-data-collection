@@ -1,10 +1,10 @@
 import { createContext, useState } from "react";
 
-type DataCaptureData = {
-  frontImage: File | null;
-  rightImage: File | null;
-  leftImage: File | null;
-  backImage: File | null;
+export type DataCaptureData = {
+  forward: string | null;
+  backward: string | null;
+  right: string | null;
+  left: string | null;
   age: number | null;
 };
 
@@ -13,6 +13,7 @@ interface DataCaptureContextProps {
   nextPage: () => void;
   prevPage: () => void;
   data: DataCaptureData;
+  setData: (data: DataCaptureData) => void;
 }
 
 const DataCaptureContext = createContext<DataCaptureContextProps>({
@@ -20,17 +21,25 @@ const DataCaptureContext = createContext<DataCaptureContextProps>({
   nextPage: () => {},
   prevPage: () => {},
   data: {
-    frontImage: null,
-    rightImage: null,
-    leftImage: null,
-    backImage: null,
+    forward: null,
+    backward: null,
+    right: null,
+    left: null,
     age: null,
   },
+  setData: () => {},
 });
 
 // const DataCaptureProvider = DataCaptureContext.Provider;
 function DataCaptureProvider({ children }: { children: React.ReactNode }) {
   const [currentPage, setCurrentPage] = useState(0);
+  const [data, setData] = useState<DataCaptureData>({
+    forward: null,
+    backward: null,
+    right: null,
+    left: null,
+    age: null,
+  });
 
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -44,13 +53,8 @@ function DataCaptureProvider({ children }: { children: React.ReactNode }) {
         currentPage,
         nextPage,
         prevPage,
-        data: {
-          frontImage: null,
-          rightImage: null,
-          leftImage: null,
-          backImage: null,
-          age: null,
-        },
+        setData,
+        data,
       }}
     >
       {children}
