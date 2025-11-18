@@ -1,7 +1,5 @@
 import { Canvas } from "@react-three/fiber";
 import {
-  Bounds,
-  OrbitControls,
   SpotLight,
   OrthographicCamera,
 } from "@react-three/drei";
@@ -16,7 +14,7 @@ export default function PoseModelCanvas({
   return (
     <Canvas>
       {/* <color attach="background" args={["#000"]} /> */}
-      <OrthographicCamera makeDefault position={[0, 0, 30]} zoom={0.6} />
+      <OrthographicCamera makeDefault position={[0, 0, 30]} zoom={0.85} />
       <ambientLight intensity={1} />
       <directionalLight position={[5, 0, 0]} intensity={2} />
       <SpotLight intensity={8} position={[0, 0, 0]} />

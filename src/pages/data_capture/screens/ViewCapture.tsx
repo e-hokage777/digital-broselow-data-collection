@@ -1,19 +1,20 @@
 import ImageInput from "@/components/ImageInput";
-import PoseModelCanvas from "./PoseModelCanvas";
-import PoseSelectionButton from "./PoseSelectionButton";
+import PoseModelCanvas from "../../../components/PoseModelCanvas";
+import PoseSelectionButton from "../../../components/PoseSelectionButton";
 import { useState } from "react";
-import PoseModel from "./PoseModel";
-
+import PoseModel from "../../../components/PoseModel";
 
 export default function ViewCapture() {
-  const [direction, setDirection] = useState<"forward" | "right" | "left" | "backward">("forward");
+  const [direction, setDirection] = useState<
+    "forward" | "right" | "left" | "backward"
+  >("forward");
   return (
     <section className="flex flex-col gap-8">
-      <h1 className="text-center text-2xl">Patient Images</h1>
+      <h1 className="text-center text-2xl font-semibold">Patient Images</h1>
       {/** pose display section */}
       <div className="flex flex-row gap-4">
         <div className="grow w-1/2">
-          <h2 className="font-light text-xl">Front</h2>
+          <h2 className=" text-xl">Front</h2>
           <p>
             Please make sure the patient is standing upright, facing the camera
             as shown to the right
@@ -32,7 +33,7 @@ export default function ViewCapture() {
       </div>
 
       {/** pose selection area */}
-      <div className="flex flex-row justify-between items-center">
+      <div className="flex flex-row justify-center items-center gap-8">
         <PoseSelectionButton direction="forward" onClick={setDirection} />
         <PoseSelectionButton direction="right" onClick={setDirection} />
         <PoseSelectionButton direction="backward" onClick={setDirection} />

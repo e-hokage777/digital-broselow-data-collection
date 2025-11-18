@@ -10,13 +10,16 @@ export default function PoseSelectionButton({
   onClick?: (direction: Direction) => void;
 }) {
   return (
-    <div
-      role="button"
-      aria-label={`Pose ${direction}`}
-      className="w-15 h-15 rounded-full  border border-gray-400 flex justify-center items-center cursor-pointer"
-      onClick={() => onClick?.(direction)}
-    >
-      <PersonStanding className="size-8 stroke-1 stroke-gray-400" />
+    <div className="flex flex-col gap-2 items-center">
+      <div
+        role="button"
+        aria-label={`Pose ${direction}`}
+        className="w-12 h-12 rounded-full  border border-gray-400 flex justify-center items-center cursor-pointer"
+        onClick={() => onClick?.(direction)}
+      >
+        <PersonStanding className="size-6 stroke-1 stroke-gray-400" />
+      </div>
+      <span className="text-xs text-gray-400 capitalize">{direction}</span>
     </div>
   );
 }
