@@ -10,10 +10,12 @@ export default function PoseSelectionButton({
   direction,
   onClick,
   assigned = false,
+  selected = false,
 }: {
   direction: Direction;
   onClick?: (direction: Direction) => void;
   assigned?: boolean;
+  selected?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   useGSAP(
@@ -29,6 +31,16 @@ export default function PoseSelectionButton({
           stroke: "white",
           duration: 0.3,
         });
+      } else {
+        gsap.to(`[data-role="button"]`, {
+          duration: 0.3,
+          rotateY: 0,
+          backgroundColor: "white",
+        });
+        gsap.to('[data-role="icon"]', {
+          stroke: "gray",
+          duration: 0.3,
+        });
       }
     },
     { dependencies: [assigned], scope: ref }
@@ -40,7 +52,10 @@ export default function PoseSelectionButton({
         data-role="button"
         role="button"
         aria-label={`Pose ${direction}`}
-        className="w-12 h-12 rounded-full  border border-gray-400 flex justify-center items-center cursor-pointer"
+        className={cn(
+          "w-12 h-12 rounded-full  border 0 flex justify-center items-center cursor-pointer",
+          selected ? "border-primary stroke-2" : "border-gray-400"
+        )}
         onClick={() => onClick?.(direction)}
       >
         <PersonStanding
@@ -48,7 +63,14 @@ export default function PoseSelectionButton({
           className={cn("size-6 stroke-1 stroke-gray-400")}
         />
       </div>
-      <span className="text-xs text-gray-400 capitalize">{direction}</span>
+      <span
+        className={cn(
+          "text-xs  capitalize",
+          selected ? "text-primary font-semibold" : "text-gray-400"
+        )}
+      >
+        {direction}
+      </span>
     </div>
   );
 }

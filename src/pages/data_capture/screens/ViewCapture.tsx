@@ -30,7 +30,7 @@ export default function ViewCapture() {
       {/** pose display section */}
       <div className="flex flex-row gap-4">
         <div className="grow w-1/2">
-          <h2 className=" text-xl capitalize">{direction}</h2>
+          <h2 className=" text-xl capitalize text-primary">{direction}</h2>
           <p>{getInstructions()}</p>
         </div>
         <div className="grow w-1/2  h-40 rounded-lg overflow-hidden">
@@ -56,21 +56,25 @@ export default function ViewCapture() {
       {/** pose selection area */}
       <div className="flex flex-row justify-center items-center gap-8">
         <PoseSelectionButton
+          selected={direction === "forward"}
           direction="forward"
           onClick={setDirection}
           assigned={!!data["forward"]}
         />
         <PoseSelectionButton
+          selected={direction === "right"}
           direction="right"
           onClick={setDirection}
           assigned={!!data["right"]}
         />
         <PoseSelectionButton
+          selected={direction === "backward"}
           direction="backward"
           onClick={setDirection}
           assigned={!!data["backward"]}
         />
         <PoseSelectionButton
+          selected={direction === "left"}
           direction="left"
           onClick={setDirection}
           assigned={!!data["left"]}

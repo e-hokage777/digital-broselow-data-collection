@@ -3,6 +3,7 @@ import { Camera, LucideCamera, Repeat, X, XCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 export default function ImageInput({
   onCapture,
@@ -20,7 +21,8 @@ export default function ImageInput({
   const [error, setError] = useState<string | null>(null);
 
   // styles for video buttons
-  const buttonStyles = "flex items-center justify-center size-10 rounded-full";
+  const buttonStyles =
+    "flex items-center justify-center size-8 rounded-full cursor-pointer";
 
   useEffect(() => {
     videoRef.current?.addEventListener("canplay", () => {
@@ -100,7 +102,8 @@ export default function ImageInput({
             opacity: 1,
           },
           "<"
-        );
+        )
+        .set("#image-input-video", { pointerEvents: "all" });
 
       return () => {
         animationRef.current?.kill();
@@ -114,42 +117,42 @@ export default function ImageInput({
     else animationRef.current?.reverse();
   };
   return (
-    <div
-      className="w-full h-full  cursor-pointer relative"
-      onClick={(e) => {
-        handleAnimate();
-        e.stopPropagation();
-      }}
-      ref={inputRef}
-    >
+    <div className="w-full h-full relative" ref={inputRef}>
       {value ? (
         <div className="w-full h-full rounded-lg overflow-hidden relative">
           <img src={value} className="w-full h-full absolute left-0 top-0" />
           <div className="w-full h-full absolute left-0 top-0 flex justify-end gap-4 p-4">
-            <Button variant="secondary" className="rounded-full w-8 h-8">
-              <Repeat
-                className="size-4 stroke-2"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onCapture?.("");
-                }}
-              />
+            <Button
+              variant="secondary"
+              className={cn(buttonStyles, "size-8")}
+              onClick={(e) => {
+                handleAnimate();
+                e.stopPropagation();
+              }}
+            >
+              <Repeat className="size-4 stroke-2" />
             </Button>
-            <Button variant="secondary" className="rounded-full w-8 h-8">
-              <X
-                className="size-4 stroke-2"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onCapture?.("");
-                }}
-              />
+            <Button
+              variant="secondary"
+              className={cn(buttonStyles, "size-8")}
+              onClick={(e) => {
+
+                e.stopPropagation();
+                onCapture?.("");
+              }}
+            >
+              <X className="size-4 stroke-2" />
             </Button>
           </div>
         </div>
       ) : (
         <div
           id="image-input-placeholder"
-          className="bg-gray-200 flex flex-col justify-center items-center rounded-lg text-gray-600 w-full h-full absolute left-0 top-0 "
+          className="bg-gray-200 flex flex-col justify-center items-center rounded-lg text-gray-600 w-full h-full absolute left-0 top-0 cursor-pointer"
+          onClick={(e) => {
+            handleAnimate();
+            e.stopPropagation();
+          }}
         >
           <LucideCamera className="size-19 stroke-1" />
           <div className="text-2xl ">Camera</div>
@@ -157,7 +160,7 @@ export default function ImageInput({
       )}
       <div
         id="image-input-video"
-        className=" absolute left-0 top-0 z-20 w-full h-full opacity-0 bg-black"
+        className=" absolute left-0 top-0 z-20 w-full h-full opacity-0 bg-black pointer-events-none"
       >
         <video ref={videoRef} className="w-full h-full object-cover"></video>
         <div className="flex flex-col justify-between w-full h-full absolute left-0 top-0">
@@ -170,13 +173,13 @@ export default function ImageInput({
                 e.stopPropagation();
               }}
             >
-              <X className="size-6 stroke-primary stroke-1" />
+              <X className="size-5 stroke-2" />
             </Button>
           </div>
           <div className="w-full pb-4 flex justify-center">
             <Button
               variant="secondary"
-              className={buttonStyles}
+              className={cn(buttonStyles, "size-14")}
               onClick={(e) => {
                 takePicture();
                 handleAnimate(false);
