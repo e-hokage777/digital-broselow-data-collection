@@ -1,5 +1,5 @@
 import { useGSAP } from "@gsap/react";
-import { Camera, LucideCamera, X, XCircle } from "lucide-react";
+import { Camera, LucideCamera, Repeat, X, XCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Button } from "./ui/button";
@@ -123,7 +123,29 @@ export default function ImageInput({
       ref={inputRef}
     >
       {value ? (
-        <img src={value} className="w-full h-full rounded-lg" />
+        <div className="w-full h-full rounded-lg overflow-hidden relative">
+          <img src={value} className="w-full h-full absolute left-0 top-0" />
+          <div className="w-full h-full absolute left-0 top-0 flex justify-end gap-4 p-4">
+            <Button variant="secondary" className="rounded-full w-8 h-8">
+              <Repeat
+                className="size-4 stroke-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onCapture?.("");
+                }}
+              />
+            </Button>
+            <Button variant="secondary" className="rounded-full w-8 h-8">
+              <X
+                className="size-4 stroke-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onCapture?.("");
+                }}
+              />
+            </Button>
+          </div>
+        </div>
       ) : (
         <div
           id="image-input-placeholder"

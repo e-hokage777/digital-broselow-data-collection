@@ -43,6 +43,7 @@ export default function ViewCapture() {
       {/** pose capture section */}
       <div className="h-75">
         <ImageInput
+          value={data[direction] ?? undefined}
           onCapture={(imageDataUrl) => {
             setData({
               ...data,
@@ -54,10 +55,26 @@ export default function ViewCapture() {
 
       {/** pose selection area */}
       <div className="flex flex-row justify-center items-center gap-8">
-        <PoseSelectionButton direction="forward" onClick={setDirection} />
-        <PoseSelectionButton direction="right" onClick={setDirection} />
-        <PoseSelectionButton direction="backward" onClick={setDirection} />
-        <PoseSelectionButton direction="left" onClick={setDirection} />
+        <PoseSelectionButton
+          direction="forward"
+          onClick={setDirection}
+          assigned={!!data["forward"]}
+        />
+        <PoseSelectionButton
+          direction="right"
+          onClick={setDirection}
+          assigned={!!data["right"]}
+        />
+        <PoseSelectionButton
+          direction="backward"
+          onClick={setDirection}
+          assigned={!!data["backward"]}
+        />
+        <PoseSelectionButton
+          direction="left"
+          onClick={setDirection}
+          assigned={!!data["left"]}
+        />
       </div>
     </section>
   );
