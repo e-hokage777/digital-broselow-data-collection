@@ -6,15 +6,17 @@ import { Button } from "./ui/button";
 
 export default function ImageInput({
   onCapture,
+  value,
 }: {
   onCapture?: (value: string) => void;
+  value?: string;
 }) {
   const inputRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<gsap.core.Timeline>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamingRef = useRef<boolean>(false);
-  const [value, setValue] = useState<string>();
+  // const [value, setValue] = useState<string>();
   const [error, setError] = useState<string | null>(null);
 
   // styles for video buttons
@@ -44,7 +46,6 @@ export default function ImageInput({
         );
 
       const data = canvasRef.current.toDataURL("image/png");
-      setValue(data);
       onCapture?.(data);
     }
   };
