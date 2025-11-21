@@ -6,6 +6,8 @@ export type DataCaptureData = {
   right: string | null;
   left: string | null;
   age: number | null;
+  height: number | null;
+  weight: number | null;
 };
 
 interface DataCaptureContextProps {
@@ -26,6 +28,8 @@ const DataCaptureContext = createContext<DataCaptureContextProps>({
     right: null,
     left: null,
     age: null,
+    height: null,
+    weight: null,
   },
   setData: () => {},
 });
@@ -39,6 +43,8 @@ function DataCaptureProvider({ children }: { children: React.ReactNode }) {
     right: null,
     left: null,
     age: null,
+    height: null,
+    weight: null,
   });
 
   const nextPage = () => {

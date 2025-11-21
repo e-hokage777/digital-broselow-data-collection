@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +24,7 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { DataCaptureContext } from "../services/data_capture_service";
 
 const formSchema = z.object({
   dob: z.coerce.date<Date>(),
@@ -31,7 +32,12 @@ const formSchema = z.object({
   weight: z.number(),
 });
 
-export default function MetadataForm() {
+export default function MetadataForm({
+  children,
+}: {
+  children?: Readonly<React.ReactNode>;
+}) {
+  const { setData, data } = useContext(DataCaptureContext);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,7 +47,6 @@ export default function MetadataForm() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      console.log(values);
       toast(
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(values, null, 2)}</code>
@@ -108,7 +113,14 @@ export default function MetadataForm() {
             <FormItem>
               <FormLabel>Height (cm)</FormLabel>
               <FormControl>
-                <Input placeholder="Child's height" type="number" {...field} />
+                <Input
+                  placeholder="Child's height"
+                  type="number"
+                  {...field}
+                  onChange={() =>
+                    setData({ ...data, height: Number(field.value) })
+                  }
+                />
               </FormControl>
               <FormDescription>
                 Please enter the height of the child in centimeters
@@ -125,7 +137,14 @@ export default function MetadataForm() {
             <FormItem>
               <FormLabel>Weight (kg)</FormLabel>
               <FormControl>
-                <Input placeholder="weight" type="number" {...field} />
+                <Input
+                  placeholder="weight"
+                  type="number"
+                  {...field}
+                  onChange={() =>
+                    setData({ ...data, age: Number(field.value) })
+                  }
+                />
               </FormControl>
               <FormDescription>
                 Please enter the exact weight of the child
