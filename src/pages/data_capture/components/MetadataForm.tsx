@@ -22,21 +22,23 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
-
+import { useContext } from "react";
+import { DataCaptureContext } from "../services/data_capture_service";
 
 const formSchema = z.object({
   dob: z.coerce.date<Date>(),
-  height: z.number(),
-  weight: z.number(),
+  height: z.coerce.number<number>().min(0.1),
+  weight: z.coerce.number<number>().min(0.1),
 });
 
 export default function MetadataForm() {
+  const { setData, data } = useContext(DataCaptureContext);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       dob: new Date(),
-      // height: 0,
-      // weight: 0,
+      height: 0,
+      weight: 0,
     },
   });
 
@@ -89,8 +91,10 @@ export default function MetadataForm() {
                   <Calendar
                     mode="single"
                     selected={field.value}
-                    // onSelect={() => setData({ ...data, dob: field.value })}
-                    onSelect={field.onChange}
+                    onSelect={() =>
+                      setData({ ...data, [field.name]: field.value })
+                    }
+                    // onSelect={field.onChange}
                     initialFocus
                   />
                 </PopoverContent>
@@ -114,7 +118,10 @@ export default function MetadataForm() {
                   placeholder="Child's height"
                   type="number"
                   {...field}
-                  // onChange={field.onChange}
+                  onChange={() =>
+                    setData({ ...data, [field.name]: field.value })
+                  }
+                  onInput={field.onChange}
                 />
               </FormControl>
               <FormDescription>
@@ -128,11 +135,19 @@ export default function MetadataForm() {
         <FormField
           control={form.control}
           name="weight"
-          render={({ field }) => ( 
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Weight (kg)</FormLabel>
               <FormControl>
-                <Input placeholder="weight" type="number" {...field} />
+                <Input
+                  placeholder="weight"
+                  type="number"
+                  {...field}
+                  onChange={() =>
+                    setData({ ...data, [field.name]: field.value })
+                  }
+                  onInput={field.onChange}
+                />
               </FormControl>
               <FormDescription>
                 Please enter the exact weight of the child

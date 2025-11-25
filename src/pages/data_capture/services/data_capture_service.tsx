@@ -16,6 +16,7 @@ interface DataCaptureContextProps {
   prevPage: () => void;
   data: DataCaptureData;
   setData: (data: DataCaptureData) => void;
+  submit: () => void;
 }
 
 const DataCaptureContext = createContext<DataCaptureContextProps>({
@@ -32,6 +33,7 @@ const DataCaptureContext = createContext<DataCaptureContextProps>({
     weight: null,
   },
   setData: () => {},
+  submit: () => {},
 });
 
 // const DataCaptureProvider = DataCaptureContext.Provider;
@@ -53,6 +55,12 @@ function DataCaptureProvider({ children }: { children: React.ReactNode }) {
   const prevPage = () => {
     setCurrentPage(Math.max(0, currentPage - 1));
   };
+
+  const submit = () => {
+    // TODO: validate information
+    // submit data
+  };
+
   return (
     <DataCaptureContext.Provider
       value={{
@@ -61,6 +69,7 @@ function DataCaptureProvider({ children }: { children: React.ReactNode }) {
         prevPage,
         setData,
         data,
+        submit,
       }}
     >
       {children}

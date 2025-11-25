@@ -1,8 +1,9 @@
 import MetadataForm from "../components/MetadataForm";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { DataCaptureContext } from "../services/data_capture_service";
-import { Skeleton } from "@/components/ui/skeleton";
 import { PersonStanding } from "lucide-react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 export default function MetadataScreen() {
   const { data } = useContext(DataCaptureContext);
@@ -12,7 +13,7 @@ export default function MetadataScreen() {
       <MetadataForm />
       <div>
         <h3 className="mb-4 text-xl font-semibold">Image Preview</h3>
-        <div className="grid grid-cols-2 grid-rows-2 gap-2">
+        <div className="grid grid-cols-2 grid-rows-2 gap-2 overflow-hidden">
           <ImagePreviewGridItem
             direction={"forward"}
             src={data["forward"] ?? undefined}
@@ -42,8 +43,41 @@ function ImagePreviewGridItem({
   src: string | undefined;
   direction: string;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (ref.current) {
+        gsap.fromTo(
+          ref.current,
+          {
+            opacity: 0,
+            xPercent: ["left", "right"].includes(direction) ? 100 : -100,
+          },
+          {
+            opacity: 1,
+            xPercent: 0,
+            duration: 0.3,
+            delay:
+              direction === "forward"
+                ? 0
+                : direction === "left"
+                ? 0.1
+                : direction === "right"
+                ? 0.2
+                : 0.3,
+          }
+        );
+      }
+    },
+    { dependencies: [direction] }
+  );
+
   return (
-    <div className="rounded-lg overflow-hidden border-gray-400 border relative">
+    <div
+      ref={ref}
+      className="rounded-lg overflow-hidden border-gray-400 border relative"
+    >
       <div className="w-full h-full absolute left-0 top-0 bg-black/20 p-2">
         <p className="text-white">{direction}</p>
       </div>

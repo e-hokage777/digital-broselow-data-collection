@@ -9,7 +9,8 @@ import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import MetadataScreen from "./screens/Metadata";
 
 export default function DataCapturePage() {
-  const { currentPage, nextPage, prevPage } = useContext(DataCaptureContext);
+  const { currentPage, nextPage, prevPage, submit } =
+    useContext(DataCaptureContext);
   const buttonStyles =
     "rounded-full w-30 py-2 flex justify-center items-center gap-1";
   return (
@@ -25,7 +26,12 @@ export default function DataCapturePage() {
             Next <ChevronRight />
           </Button>
         ) : (
-          <Button className={buttonStyles}  type="submit" form="metadata-form">
+          <Button
+            className={buttonStyles}
+            type="submit"
+            form="metadata-form"
+            onClick={submit}
+          >
             Submit <Check />
           </Button>
         )}
