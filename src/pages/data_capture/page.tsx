@@ -5,7 +5,7 @@ import {
 } from "./services/data_capture_service";
 import ViewCapture from "./screens/ViewCapture";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import MetadataScreen from "./screens/Metadata";
 
 export default function DataCapturePage() {
@@ -20,9 +20,15 @@ export default function DataCapturePage() {
         <Button className={buttonStyles} onClick={prevPage}>
           <ChevronLeft /> Previous
         </Button>
-        <Button className={buttonStyles} onClick={nextPage}>
-          Next <ChevronRight />
-        </Button>
+        {currentPage !== 1 ? (
+          <Button className={buttonStyles} onClick={nextPage}>
+            Next <ChevronRight />
+          </Button>
+        ) : (
+          <Button className={buttonStyles}  type="submit" form="metadata-form">
+            Submit <Check />
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ export type DataCaptureData = {
   backward: string | null;
   right: string | null;
   left: string | null;
-  age: number | null;
+  dob: Date | null;
   height: number | null;
   weight: number | null;
 };
@@ -27,7 +27,7 @@ const DataCaptureContext = createContext<DataCaptureContextProps>({
     backward: null,
     right: null,
     left: null,
-    age: null,
+    dob: null,
     height: null,
     weight: null,
   },
@@ -42,7 +42,7 @@ function DataCaptureProvider({ children }: { children: React.ReactNode }) {
     backward: null,
     right: null,
     left: null,
-    age: null,
+    dob: null,
     height: null,
     weight: null,
   });

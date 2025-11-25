@@ -1,5 +1,3 @@
-"use client";
-import { useState, useContext } from "react";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,7 +22,7 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { DataCaptureContext } from "../services/data_capture_service";
+
 
 const formSchema = z.object({
   dob: z.coerce.date<Date>(),
@@ -32,16 +30,13 @@ const formSchema = z.object({
   weight: z.number(),
 });
 
-export default function MetadataForm({
-  children,
-}: {
-  children?: Readonly<React.ReactNode>;
-}) {
-  const { setData, data } = useContext(DataCaptureContext);
+export default function MetadataForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       dob: new Date(),
+      // height: 0,
+      // weight: 0,
     },
   });
 
@@ -61,6 +56,7 @@ export default function MetadataForm({
   return (
     <Form {...form}>
       <form
+        id="metadata-form"
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8 w-full mx-auto py-4"
       >
@@ -93,6 +89,7 @@ export default function MetadataForm({
                   <Calendar
                     mode="single"
                     selected={field.value}
+                    // onSelect={() => setData({ ...data, dob: field.value })}
                     onSelect={field.onChange}
                     initialFocus
                   />
@@ -117,9 +114,7 @@ export default function MetadataForm({
                   placeholder="Child's height"
                   type="number"
                   {...field}
-                  onChange={() =>
-                    setData({ ...data, height: Number(field.value) })
-                  }
+                  // onChange={field.onChange}
                 />
               </FormControl>
               <FormDescription>
@@ -133,18 +128,11 @@ export default function MetadataForm({
         <FormField
           control={form.control}
           name="weight"
-          render={({ field }) => (
+          render={({ field }) => ( 
             <FormItem>
               <FormLabel>Weight (kg)</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="weight"
-                  type="number"
-                  {...field}
-                  onChange={() =>
-                    setData({ ...data, age: Number(field.value) })
-                  }
-                />
+                <Input placeholder="weight" type="number" {...field} />
               </FormControl>
               <FormDescription>
                 Please enter the exact weight of the child

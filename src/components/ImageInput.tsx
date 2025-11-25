@@ -19,6 +19,7 @@ export default function ImageInput({
   const streamingRef = useRef<boolean>(false);
   // const [value, setValue] = useState<string>();
   const [error, setError] = useState<string | null>(null);
+  const posRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
   // styles for video buttons
   const buttonStyles =
@@ -57,6 +58,7 @@ export default function ImageInput({
       animationRef.current = gsap
         .timeline({
           paused: true,
+          defaults: { ease: "power2.out" },
           onReverseComplete: () => {
             gsap.set(inputRef.current, { clearProps: "all" });
             videoRef.current!.srcObject = null;
@@ -80,21 +82,27 @@ export default function ImageInput({
         })
         .set(inputRef.current, {
           position: "fixed",
+          left: inputRef.current?.getBoundingClientRect().left,
+          top: inputRef.current?.getBoundingClientRect().top,
+          width: inputRef.current?.getBoundingClientRect().width,
+          height: inputRef.current?.getBoundingClientRect().height,
+          zIndex: 10000,
         })
         .to(inputRef.current, {
-          ease: "power2.out",
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          duration: 0.3,
+          width: "100%",
+          height: "100%",
+          duration: 0.2,
         })
         .to(
           "#image-input-placeholder",
           {
             opacity: 0,
           },
-          "-=0.2"
+          "<"
         )
         .to(
           "#image-input-video",
@@ -113,9 +121,21 @@ export default function ImageInput({
   );
 
   const handleAnimate = (forward = true) => {
+    const pos = computeObjectPosition();
+    if (pos) posRef.current = pos;
     if (forward) animationRef.current?.play();
     else animationRef.current?.reverse();
   };
+
+  const computeObjectPosition = () => {
+    if (inputRef.current) {
+      const rect = inputRef.current.getBoundingClientRect();
+      const x = rect.left;
+      const y = rect.top;
+      return { x, y };
+    }
+  };
+
   return (
     <div className="w-full h-full relative" ref={inputRef}>
       {value ? (
@@ -136,7 +156,6 @@ export default function ImageInput({
               variant="secondary"
               className={cn(buttonStyles, "size-8")}
               onClick={(e) => {
-
                 e.stopPropagation();
                 onCapture?.("");
               }}
