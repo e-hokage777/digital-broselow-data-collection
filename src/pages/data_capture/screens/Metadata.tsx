@@ -89,7 +89,8 @@ function ImagePreviewGridItem({
         />
       ) : (
         <div className="w-full aspect-square flex justify-center items-center">
-          <PersonStanding className="size-12" />
+          {/* <PersonStanding className="size-12" /> */}
+          <img src={`/icons/${direction}.svg`} className="size-20" />
         </div>
       )}
     </div>
