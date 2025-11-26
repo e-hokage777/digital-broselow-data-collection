@@ -22,7 +22,7 @@ export default function DataCapturePage() {
           <ChevronLeft /> Previous
         </Button>
         {currentPage !== 1 ? (
-          <Button className={buttonStyles} onClick={nextPage}>
+          <Button className={buttonStyles} onClick={nextPage} type="button">
             Next <ChevronRight />
           </Button>
         ) : (
@@ -30,7 +30,7 @@ export default function DataCapturePage() {
             className={buttonStyles}
             type="submit"
             form="metadata-form"
-            onClick={submit}
+           
           >
             Submit <Check />
           </Button>
