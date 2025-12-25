@@ -1,9 +1,8 @@
-import MetadataForm from "../components/MetadataForm";
-import { useContext, useRef } from "react";
-import { DataCaptureContext } from "../services/data_capture_service";
-import { PersonStanding } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useContext, useRef } from "react";
+import MetadataForm from "../components/MetadataForm";
+import { DataCaptureContext } from "../services/data_capture_service";
 
 export default function MetadataScreen() {
   const { data } = useContext(DataCaptureContext);

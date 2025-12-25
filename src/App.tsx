@@ -1,7 +1,6 @@
 import Navbar from "./components/Navbar";
-import ViewCapture from "@/pages/data_capture/screens/ViewCapture";
-import { DataCaptureProvider } from "./pages/data_capture/services/data_capture_service";
 import DataCapturePage from "./pages/data_capture/page";
+import { DataCaptureProvider } from "./pages/data_capture/services/data_capture_service";
 
 export default function App() {
   return (

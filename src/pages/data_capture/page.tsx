@@ -1,15 +1,14 @@
-import { useContext } from "react";
-import {
-  DataCaptureProvider,
-  DataCaptureContext,
-} from "./services/data_capture_service";
-import ViewCapture from "./screens/ViewCapture";
 import { Button } from "@/components/ui/button";
 import { Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { useContext } from "react";
 import MetadataScreen from "./screens/Metadata";
+import ViewCapture from "./screens/ViewCapture";
+import {
+  DataCaptureContext
+} from "./services/data_capture_service";
 
 export default function DataCapturePage() {
-  const { currentPage, nextPage, prevPage, submit } =
+  const { currentPage, nextPage, prevPage } =
     useContext(DataCaptureContext);
   const buttonStyles =
     "rounded-full w-30 py-2 flex justify-center items-center gap-1";

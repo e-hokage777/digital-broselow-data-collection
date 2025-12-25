@@ -9,19 +9,19 @@ const directionMap = {
   backward: -Math.PI,
 };
 
-const crossFade = (
-  from: THREE.AnimationAction | null,
-  to: THREE.AnimationAction | null,
-  duration = 0.3
-) => {
-  if (!from || !to) return;
-  to.setEffectiveWeight(1);
-  from.setEffectiveWeight(1);
-  to.reset();
-  from.crossFadeTo(to, duration).play();
-  to.play();
-  from.play();
-};
+// const crossFade = (
+//   from: THREE.AnimationAction | null,
+//   to: THREE.AnimationAction | null,
+//   duration = 0.3
+// ) => {
+//   if (!from || !to) return;
+//   to.setEffectiveWeight(1);
+//   from.setEffectiveWeight(1);
+//   to.reset();
+//   from.crossFadeTo(to, duration).play();
+//   to.play();
+//   from.play();
+// };
 
 export default function PoseModel({
   direction,

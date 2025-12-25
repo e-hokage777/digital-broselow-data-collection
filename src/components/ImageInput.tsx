@@ -1,9 +1,9 @@
-import { useGSAP } from "@gsap/react";
-import { Camera, LucideCamera, Repeat, X, XCircle } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { Camera, LucideCamera, Repeat, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Button } from "./ui/button";
 
 export default function ImageInput({
   onCapture,
@@ -18,7 +18,7 @@ export default function ImageInput({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamingRef = useRef<boolean>(false);
   // const [value, setValue] = useState<string>();
-  const [error, setError] = useState<string | null>(null);
+  const [_, setError] = useState<string | null>(null);
   const posRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
   // styles for video buttons
